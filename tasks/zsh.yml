@@ -17,3 +17,19 @@
   user:
     name: "{{ username.stdout }}"
     shell: "{{ zsh_location.stdout }}"
+
+- name: Create plugin directory
+  file:
+    path: ~/.config/zsh/plugins
+    state: directory
+    mode: 0755
+
+- name: Checkout fast syntax highlighting plugin
+  git:
+    repo: 'https://github.com/zdharma-continuum/fast-syntax-highlighting.git'
+    dest: ~/.config/zsh/plugins
+
+- name: Checkout autosuggestions plugin
+  git:
+    repo: 'https://github.com/zsh-users/zsh-autosuggestions'
+    dest: ~/.config/zsh/plugins
