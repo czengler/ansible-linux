@@ -21,4 +21,4 @@ apt install -y git
 su - "$USER" -c 'git clone https://github.com/czengler/ansible-linux.git ansible'
 
 # After that, the ansible playbook can be executed with the following command
-# ansible-playbook -K local.yml
+# ansible-playbook -K --ask-vault-password local.yml
