@@ -1,0 +1,21 @@
+- name: Get current user
+  become: false
+  shell: whoami
+  register: username
+
+- name: Disable SSH root login
+  become: true
+  shell: echo -e "#Added by Ansible\nPermitRootLogin no\n" >> /etc/ssh/sshd_config
+
+- name: Only allow current user for ssh login
+  become: true
+  shell: echo -e echo -e "AllowUsers {{ username }}\n\n" >> /etc/ssh/sshd_config
+
+- name: Adjust SSH client alive settings
+  become: true
+  shell: echo -e "ClientAliveInterval 120\nClientAliveCountMax 10\n" >> /etc/ssh/sshd_config
+
+- name: Restart SSH daemon
+  become: true
+  shell: systemctl restart sshd
+
