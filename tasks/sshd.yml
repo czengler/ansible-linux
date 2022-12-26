@@ -19,3 +19,16 @@
   become: true
   shell: systemctl restart sshd
 
+- name: Create .ssh directory
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: 0700
+
+- name: Copy authorized keys file
+  copy:
+    src: files/authorized_keys
+    dest: ~/.ssh
+    decrypt: yes
+    mode: 0600
+
