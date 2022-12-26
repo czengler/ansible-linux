@@ -1,5 +1,19 @@
 - name: Install zsh
+  become: true
   apt:
     name: zsh
-- name: Change default shell to zsh
-  shell: chsh -s $(which zsh)
+
+- name: Get current user
+  become: false
+  shell: whoami
+  register: username
+
+- name: Get shell location
+  shell: which zsh
+  register: zsh_location
+
+- name: change user shell to zsh
+  become: true
+  user:
+    name: "{{ username.stdout }}"
+    shell: "{{ zsh_location.stdout }}"
