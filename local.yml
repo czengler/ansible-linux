@@ -9,3 +9,4 @@
       state: present
   tasks:
     - import_tasks: tasks/sshd.yml
+    - import_tasks: tasks/dotfiles.yml

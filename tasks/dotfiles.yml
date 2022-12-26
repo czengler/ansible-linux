@@ -1,10 +1,10 @@
 - name: Checkout dotfiles
   git:
     repo: 'https://github.com/czengler/dotfiles-linux'
-    dest: .config
+    dest: ~/.config
 
-- name: symlink zsh config
+- name: Symlink zsh config
   file:
     src: ~/.config/zsh/zshrc
-    dest: ~
+    dest: ~/.zshrc
     state: link
