@@ -1,0 +1,24 @@
+- name: Download lf release tar
+  get_url:
+    url: https://github.com/gokcehan/lf/releases/download/r28/lf-linux-amd64.tar.gz
+    dest: /tmp/lf-linux-amd64.tar.gz
+
+- name: Untar release tar
+  shell: cd /tmp && tar -xzvf lf-linux-amd64.tar.gz
+
+- name: Copy it to a binary folder
+  become: true
+  copy:
+    src: /tmp/lf
+    dest: /usr/local/bin/lf
+    mode: 0755
+
+- name: Remove binary
+  file:
+    path: /tmp/lf
+    state: absent
+
+- name: Remove tar
+  file:
+    path: /tmp/lf-linux-amd64.tar.gz
+    state: absent
