@@ -9,6 +9,8 @@
     - libtool
     - libtool-bin
     - gettext
+    - jq
+    - libxml2-utils
 
 - name: Get neovim location
   shell: echo "$(pwd)/neovim"
