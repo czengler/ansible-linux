@@ -11,25 +11,31 @@
     - gettext
     - jq
     - libxml2-utils
+  tags: [ install, neovim ]
 
 - name: Get neovim location
   shell: echo "$(pwd)/neovim"
   register: nvim_location
+  tags: [ install, neovim ]
 
 - name: Remove existing neovim directory
   file:
     path: "{{ nvim_location.stdout }}"
     state: absent
+  tags: [ install, neovim ]
 
 - name: Clone Neovim
   git:
     repo: "https://github.com/neovim/neovim.git"
     dest: "{{ nvim_location.stdout }}"
+  tags: [ install, neovim ]
 
 - name: Build neovim
   shell: cd {{ nvim_location.stdout }} && make CMAKE_BUILD_TYPE=RelWithDebInfo
+  tags: [ install, neovim ]
 
 - name: Install neovim
   become: true
   shell: cd {{ nvim_location.stdout }} && make install
+  tags: [ install, neovim ]
 

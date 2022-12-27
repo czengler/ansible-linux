@@ -2,9 +2,11 @@
   git:
     repo: 'https://github.com/czengler/dotfiles-linux'
     dest: ~/.config
+  tags: [ install, dotfiles ]
 
 - name: Symlink zsh config
   file:
     src: ~/.config/zsh/zshrc
     dest: ~/.zshrc
     state: link
+  tags: [ install, dotfiles ]

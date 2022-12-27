@@ -2,34 +2,41 @@
   become: true
   apt:
     name: zsh
+  tags: [ install, zsh ]
 
 - name: Get current user
   become: false
   shell: whoami
   register: username
+  tags: [ install, zsh ]
 
 - name: Get shell location
   shell: which zsh
   register: zsh_location
+  tags: [ install, zsh ]
 
 - name: change user shell to zsh
   become: true
   user:
     name: "{{ username.stdout }}"
     shell: "{{ zsh_location.stdout }}"
+  tags: [ install, zsh ]
 
 - name: Create plugin directory
   file:
     path: ~/.config/zsh/plugins
     state: directory
     mode: 0755
+  tags: [ install, zsh ]
 
 - name: Checkout fast syntax highlighting plugin
   git:
     repo: 'https://github.com/zdharma-continuum/fast-syntax-highlighting.git'
     dest: ~/.config/zsh/plugins/fast-syntax-highlighting
+  tags: [ install, zsh ]
 
 - name: Checkout autosuggestions plugin
   git:
     repo: 'https://github.com/zsh-users/zsh-autosuggestions'
     dest: ~/.config/zsh/plugins/zsh-autosuggestions
+  tags: [ install, zsh ]

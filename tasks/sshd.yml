@@ -2,28 +2,34 @@
   become: false
   shell: whoami
   register: username
+  tags: [ install, ssh ]
 
 - name: Disable SSH root login
   become: true
   shell: echo "\n#Added by Ansible\nPermitRootLogin no" >> /etc/ssh/sshd_config
+  tags: [ install, ssh ]
 
 - name: Only allow current user for ssh login
   become: true
   shell: echo "AllowUsers {{ username.stdout }}\n" >> /etc/ssh/sshd_config
+  tags: [ install, ssh ]
 
 - name: Adjust SSH client alive settings
   become: true
   shell: echo "ClientAliveInterval 120\nClientAliveCountMax 10\n" >> /etc/ssh/sshd_config
+  tags: [ install, ssh ]
 
 - name: Restart SSH daemon
   become: true
   shell: systemctl restart sshd
+  tags: [ install, ssh ]
 
 - name: Create .ssh directory
   file:
     path: ~/.ssh
     state: directory
     mode: 0700
+  tags: [ install, ssh ]
 
 - name: Copy authorized keys file
   copy:
@@ -31,4 +37,5 @@
     dest: ~/.ssh
     decrypt: yes
     mode: 0600
+  tags: [ install, ssh ]
 
