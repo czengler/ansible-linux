@@ -1,4 +1,33 @@
-- name: Install neovim
+- name: Install requirements for neovim
   become: true
   apt:
-    name: neovim
+    pkg:
+    - build-essential
+    - cmake
+    - pkg-config
+    - unzip
+    - libtool
+    - libtool-bin
+    - gettext
+
+- name: Get neovim location
+  shell: echo "$(pwd)/neovim"
+  register: nvim_location
+
+- name: Remove existing neovim directory
+  file:
+    path: "{{ nvim_location.stdout }}"
+    state: absent
+
+- name: Clone Neovim
+  git:
+    repo: "https://github.com/neovim/neovim.git"
+    dest: "{{ nvim_location.stdout }}"
+
+- name: Build neovim
+  shell: cd {{ nvim_location.stdout }} && make CMAKE_BUILD_TYPE=RelWithDebInfo
+
+- name: Install neovim
+  become: true
+  shell: cd {{ nvim_location.stdout }} && make install
+
