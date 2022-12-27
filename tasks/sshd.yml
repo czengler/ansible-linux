@@ -1,9 +1,3 @@
-- name: Get current user
-  become: false
-  shell: whoami
-  register: username
-  tags: [ install, ssh ]
-
 - name: Disable SSH root login
   become: true
   shell: echo "\n#Added by Ansible\nPermitRootLogin no" >> /etc/ssh/sshd_config
@@ -11,7 +5,7 @@
 
 - name: Only allow current user for ssh login
   become: true
-  shell: echo "AllowUsers {{ username.stdout }}\n" >> /etc/ssh/sshd_config
+  shell: echo "AllowUsers {{ user }}\n" >> /etc/ssh/sshd_config
   tags: [ install, ssh ]
 
 - name: Adjust SSH client alive settings

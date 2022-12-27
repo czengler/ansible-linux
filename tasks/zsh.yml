@@ -4,12 +4,6 @@
     name: zsh
   tags: [ install, zsh ]
 
-- name: Get current user
-  become: false
-  shell: whoami
-  register: username
-  tags: [ install, zsh ]
-
 - name: Get shell location
   shell: which zsh
   register: zsh_location
@@ -18,7 +12,7 @@
 - name: change user shell to zsh
   become: true
   user:
-    name: "{{ username.stdout }}"
+    name: "{{ user }}"
     shell: "{{ zsh_location.stdout }}"
   tags: [ install, zsh ]
 

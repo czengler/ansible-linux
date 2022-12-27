@@ -7,10 +7,21 @@
       force_apt_get: true
       update_cache: true
       state: present
+
+  - name: Get current user
+    become: false
+    shell: whoami
+    register: username
+    tags: [ install, zsh ]
+
   tasks:
     - import_tasks: tasks/sshd.yml
+      vars:
+        user: "{{ username.stdout }}"
     - import_tasks: tasks/dotfiles.yml
     - import_tasks: tasks/zsh.yml
+      vars:
+        user: "{{ username.stdout }}"
     - import_tasks: tasks/neovim.yml
     - import_tasks: tasks/lf.yml
 
