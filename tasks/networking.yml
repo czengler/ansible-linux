@@ -5,6 +5,7 @@
     pkg:
     - tcpdump
     - nmap
+    - curl
   tags: [ install, networking ]
 
 - name: Stop and deactive systemd login daemon (sometimes slow as hell)
