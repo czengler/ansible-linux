@@ -1,0 +1,13 @@
+
+- name: Install some little networking tools
+  become: true
+  apt:
+    pkg:
+    - tcpdump
+    - nmap
+  tags: [ install, networking ]
+
+- name: Stop and deactive systemd login daemon (sometimes slow as hell)
+  become: true
+  shell: systemctl mask systemd-logind
+  tags: [ install, networking ]
