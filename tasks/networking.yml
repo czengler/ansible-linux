@@ -12,3 +12,8 @@
   become: true
   shell: systemctl mask systemd-logind
   tags: [ install, networking ]
+
+- name: Set time to Europe/Berlin
+  become: true
+  shell: timedatectl set-timezone Europe/Berlin
+  tags: [ install, networking, time ]
